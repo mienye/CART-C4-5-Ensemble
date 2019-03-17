@@ -1,0 +1,306 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Mar 11 11:49:15 2019
+
+@author: Domor
+"""
+from sklearn.utils import shuffle
+import pandas as pd
+from matplotlib import pyplot as plt
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, f1_score,recall_score, precision_score
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.tree import DecisionTreeClassifier
+import numpy as np
+#import matplotlib as plt
+from numpy import loadtxt
+from numpy import sort
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
+from sklearn.feature_selection import SelectFromModel
+from pandas import DataFrame, read_csv
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import scale
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.decomposition import PCA
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+#from xgboost import XGBClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import LeaveOneOut
+import pandas as pd
+from pandas import read_csv
+#from xgboost import XGBClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import StratifiedKFold
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import accuracy_score
+from sklearn.utils import shuffle
+###################################################################################################
+def ImportCerv():
+    
+
+    newdata=pd.read_csv('C:/Users/Domor/Documents/cervical1.csv')
+    #newdata.replace(to_replace={"?"}, value=0, regex=True, inplace=True)
+    newdata=shuffle(newdata)
+    #newdata.columns=head
+    newdata.replace('?', 0, inplace=True)
+    newdata.to_csv('C:/Users/Domor/Documents/cervical1.csv', index=False)
+    print(newdata)
+    print("Succesfully created <<<<<>>>>>")
+    #return newdata
+###################################################################################################
+def modelled():
+    
+    newdata=pd.read_csv('C:/Users/Domor/Documents/cervical1.csv')
+    #newdata.replace(to_replace={"?"}, value=0, regex=True, inplace=True)
+    newdata=shuffle(newdata)
+    #newdata.columns=head
+    newdata.replace('?', 0, inplace=True)
+    X=newdata.values[:,0:15]
+    #X=X.astype('int')
+    y=newdata.values[:,15]
+    y=y.astype('int')
+    #print X
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=7)
+    model=ExtraTreesClassifier()
+    #model=LogisticRegression()
+    model.fit(X_train, y_train)
+     
+    y_pred = model.predict(X_test)
+    predictions = [round(value) for value in y_pred]
+    # evaluate predictions
+    #print(modelling[i])
+    accuracy = accuracy_score(y_test, predictions)
+    print("Accuracy of %s: %.2f%%" % ('model', accuracy * 100.0))
+    
+###################################################################################################
+
+##############################################################################################    
+def DT():
+    data = pd.read_csv('C:/Users/Domor/Documents/cervical1.csv')
+    #data.replace(['NaN'] , 0, inplace=True)
+    data.replace('?', 0, inplace=True)
+    #print (data.columns)
+    dataset = data.values
+    #dataset=shuffle(dataset)
+    #dataset=dataset.drop(dataset.columns[[0,1]], axis=1)
+    # split data into X and y
+
+    X = dataset[:,0:15]
+    y = dataset[:,15]
+    X=X.astype('int')
+    y=y.astype('int')
+    model1 = DecisionTreeClassifier(criterion='gini', splitter='best',max_depth=4, random_state=30, )
+    model2 = DecisionTreeClassifier(criterion='entropy', splitter='best', max_depth=4, random_state=30)
+    
+    clf=[model1, model2]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=7)
+    res=list()
+    for model in clf:
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+        predictions = [round(value) for value in y_pred]
+        # evaluate predictions
+        accuracy = accuracy_score(y_test, predictions)
+        print(confusion_matrix(y_test, predictions))
+        res.append(accuracy)
+        
+    print("\nAccuracy of CART: %.2f%%   Accuracy of C4.5: %.2f%%" % (res[0] * 100.0, res[1]*100))
+#####################################################################################################
+def cerData():
+    with open('C:/Users/Domor/Documents/cervical1.csv', 'rb') as csvfile:
+            reader = csv.reader(csvfile, quoting=csv.QUOTE_NONNUMERIC) # change contents to floats
+            #next(reader, None)
+            for row in reader: # each row is a list
+                results.append(row)
+    return results     
+#####################################################################################################
+def SeperateDataIntoOne_Zero():
+    zero=[]
+    one=[]
+    counterZero=0
+    counterOne=0
+    data=pd.read_csv('/home/deola/Documents/domor/cervical1.csv')
+    y=data.values[:,15]
+    for i in y:
+        if i==0:
+            zero.append(i)
+            counterZero+=1
+        else:
+            one.append(i)
+            counterOne+=1
+    #print one, zero       
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    #print"Number of ones:%d\n Number of zeros:%d\n and Length:%d" %(counterOne, counterZero , len(y)) 
+    zero=[]
+    one=[]
+#####################################################################################################
+
+def PlotData():
+
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    from pandas.tools.plotting import scatter_matrix    
+    import numpy as np
+    # The data set
+    data = pd.read_csv("C:/Users/Domor/Documents/cervical1.csv")
+    #data.replace('?', 0, inplace=True)
+    #data=data.astype('int')
+    '''Histogram'''
+    #data.hist()
+    #plt.show()
+    '''Density Plot'''
+    data.plot(kind='density', subplots=True, layout=(5,5), sharex=False)
+    plt.show()
+    plt.savefig("/Users/Domor/Documents/density_cervical.eps", format="eps", dpi=1000)
+    
+    '''The Box and wisker plot'''
+    data.plot(kind='box', subplots=True, layout=(5,5), sharex=False, sharey=False)
+    plt.show()
+    plt.savefig("/Users/Domor/Documents/box_cervical.eps", format="eps", dpi=1000)
+    '''Co-relation plot'''
+
+    names=['Age', 'Number_of_sexual_partners', 'First_ sexual_intercourse',
+       'Num_of_pregnancies', 'Smokes', 'Smokes_(years)',
+       'Smokes_(packs/year)', 'Hormonal_Contraceptives',
+       'Hormonal_Contraceptives_(years)', 'IUD', 'IUD_(years)',
+       'STDs', 'STDs_(number)', 'STDs:condylomatosis',
+       'STDs:_Number_of_diagnosis', 'Dx:Cancer']
+    
+    correlations = data.corr()
+    ''' plot correlation matrix '''
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    cax = ax.matshow(correlations, vmin=-1, vmax=1)
+    fig.colorbar(cax)
+    #fig.set_size_inches([5.375, 5.375])
+    ticks = np.arange(0,16,1)
+    ax.set_xticks(ticks)
+    ax.set_yticks(ticks)
+    ax.set_xticklabels(names, rotation=90)
+    ax.set_yticklabels(names)
+    #plt.show()
+    #fig.tight_layout(pad=0, h_pad=0, w_pad=0)
+    plt.savefig("/Users/Domor/Documents/correlation_cervical.eps", format="eps", dpi=300)
+
+    '''Scattered plot'''
+
+    #scatter_matrix(data)
+    #plt.show()
+########################################################################################################
+
+from pandas import read_csv
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+#from xgboost import XGBClassifier
+from sklearn.ensemble import ExtraTreesClassifier
+from pandas import read_csv
+from sklearn.ensemble import ExtraTreesClassifier
+    # load data
+seed=7    
+    
+def ETC():    
+    dataframe = pd.read_csv('C:/Users/Domor/Documents/cervical1.csv')
+    array = dataframe.values
+    X = array[:,0:15]
+    Y = array[:,15]
+    # feature extraction
+    #model = LogisticRegression()
+    model = ExtraTreesClassifier( random_state=seed)
+    model.fit(X, Y)
+    for i in model.feature_importances_:
+        print (i*100)
+######################################################################################################
+
+   
+###############################################################################################
+def PlotCer():   
+    arr=[20.7315106789, 16.0902362254 ,22.0949372432 ,13.7807417262 ,0.516256147383 
+         ,0.854964729185 ,2.78356512585 ,1.01404928493 ,11.1206109972 ,2.14433825497
+         ,5.57243076908 ,0.979323939217 ,0.764397871052 ,0.196977227644,1.35565977981]
+    names=['Age', 'Number_of_sexual_partners', 'First_ sexual_intercourse',
+           'Num_of_pregnancies', 'Smokes', 'Smokes_(years)',
+           'Smokes_(packs/year)', 'Hormonal_Contraceptives',
+           'Hormonal_Contraceptives_(years)', 'IUD', 'IUD_(years)',
+           'STDs', 'STDs_(number)', 'STDs:condylomatosis',
+           'STDs:_Number_of_diagnosis']
+    x=[x for x in range(len (arr))]
+    plt.xticks(x, names)
+    plt.xticks(range(len(names)), names, rotation=90)
+    plt.bar(x, score)
+    plt.grid()
+    plt.ylim((0.0,0.4))
+    plt.xlabel('Features')
+    plt.ylabel('Ranking')
+     
+    plt.bar(x, arr)
+    plt.grid()
+    plt.show()
+    plt.tight_layout(pad=0, h_pad=0, w_pad=0)
+    plt.savefig("C:Users/Domor/Documents/cervical1.eps", format="eps", dpi=300)
+    
+#############################################################################################
+
+def Cer_Alg(dataset,num):   
+    
+    ''' The Algorithm for the cervical model'''
+    data = pd.read_csv(dataset)
+    totalRes= list()
+    
+    for n in range(0, num):
+        data=shuffle(data)
+        row, col= data.shape
+        print(row,col)
+        #data1=data.values[0:int(row)/2, 0:int(col)]
+        #data2=data.values[int(row)/2:int(row), 0:int(col)]
+        #print(data2)
+        #X=data.values[0:row/2,:col-1]
+        #y=data.values[0:row/2,col-1]
+        X=data.values[:,:col-1]
+        y=data.values[:,col-1]
+        #print X_test
+        model1 = DecisionTreeClassifier(criterion='gini', splitter='best',max_depth=5, random_state=30, )
+        model2 = DecisionTreeClassifier(criterion='entropy', splitter='best', max_depth=5, random_state=30)
+        
+        clf=[model1, model2]
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=7)
+        res=list()
+        for model in clf:
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            predictions = [round(value) for value in y_pred]
+            # evaluate predictions
+            #accuracy = accuracy_score(y_test, predictions)
+            pre = precision_score(y_test, predictions)
+            #recall = recall_score(y_test, predictions)
+            print(confusion_matrix(y_test, predictions))
+            res.append(pre)
+            totalRes.append(pre)
+        print("\nAccuracy of CART: %.2f%%   Accuracy of C4.5: %.2f%%" % (res[0] * 100.0, res[1]*100))
+    print ("\nCombined accuracy: %.2f%%"%(sum(totalRes)*100.0/(len(totalRes))))
+    #print (totalRes)
+##############################################################################################
+if __name__=="__main__":
+    #m=ImportCerv()
+    #print m
+    Cer_Alg('/Users/Domor/Documents/cervical1.csv',40)
+    #modelled()
+    PlotData()
+    #RFE1()
+    #ETC()
+    #PlotCer()
+    #DT()
+    #print (cerData())
+
