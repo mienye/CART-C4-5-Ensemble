@@ -1,95 +1,34 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Mar 11 11:49:15 2019
+Created on Thu Jul 25 13:03:39 2019
 
 @author: Domor
 """
-from sklearn.utils import shuffle
+
 import pandas as pd
 from matplotlib import pyplot as plt
 import numpy as np
-from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score,recall_score, precision_score
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.tree import DecisionTreeClassifier
-import numpy as np
-#import matplotlib as plt
-from numpy import loadtxt
-from numpy import sort
-import pandas as pd
-
-from sklearn.model_selection import train_test_split
+import csv
 from sklearn.metrics import confusion_matrix
 from sklearn.feature_selection import SelectFromModel
-from pandas import DataFrame, read_csv
-import matplotlib.pyplot as plt
-from sklearn.preprocessing import scale
 from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.decomposition import PCA
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 from sklearn.feature_selection import RFE
 from sklearn.linear_model import LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.model_selection import KFold
-from sklearn.model_selection import cross_val_score
-#from xgboost import XGBClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import LeaveOneOut
-import pandas as pd
-from pandas import read_csv
-#from xgboost import XGBClassifier
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import StratifiedKFold
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
-###################################################################################################
-def ImportCerv():
-    
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+  
 
-    newdata=pd.read_csv('C:/Users/Domor/Documents/cervical1.csv')
-    #newdata.replace(to_replace={"?"}, value=0, regex=True, inplace=True)
-    newdata=shuffle(newdata)
-    #newdata.columns=head
-    newdata.replace('?', 0, inplace=True)
-    newdata.to_csv('C:/Users/Domor/Documents/cervical1.csv', index=False)
-    print(newdata)
-    print("Succesfully created <<<<<>>>>>")
-    #return newdata
-###################################################################################################
-def modelled():
-    
-    newdata=pd.read_csv('C:/Users/Domor/Documents/cervical1.csv')
-    #newdata.replace(to_replace={"?"}, value=0, regex=True, inplace=True)
-    newdata=shuffle(newdata)
-    #newdata.columns=head
-    newdata.replace('?', 0, inplace=True)
-    X=newdata.values[:,0:15]
-    #X=X.astype('int')
-    y=newdata.values[:,15]
-    y=y.astype('int')
-    #print X
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=7)
-    model=ExtraTreesClassifier()
-    #model=LogisticRegression()
-    model.fit(X_train, y_train)
-     
-    y_pred = model.predict(X_test)
-    predictions = [round(value) for value in y_pred]
-    # evaluate predictions
-    #print(modelling[i])
-    accuracy = accuracy_score(y_test, predictions)
-    print("Accuracy of %s: %.2f%%" % ('model', accuracy * 100.0))
-    
-###################################################################################################
-
-##############################################################################################    
-def DT():
-    data = pd.read_csv('C:/Users/Domor/Documents/cervical1.csv')
+###############################################################################################################
+def DT2():
+    data = pd.read_csv('C:/Users/Domor/Documents/Python/cervical1.csv')
     #data.replace(['NaN'] , 0, inplace=True)
     data.replace('?', 0, inplace=True)
     #print (data.columns)
@@ -117,45 +56,15 @@ def DT():
         print(confusion_matrix(y_test, predictions))
         res.append(accuracy)
         
+   
     print("\nAccuracy of CART: %.2f%%   Accuracy of C4.5: %.2f%%" % (res[0] * 100.0, res[1]*100))
 #####################################################################################################
-def cerData():
-    with open('C:/Users/Domor/Documents/cervical1.csv', 'rb') as csvfile:
-            reader = csv.reader(csvfile, quoting=csv.QUOTE_NONNUMERIC) # change contents to floats
-            #next(reader, None)
-            for row in reader: # each row is a list
-                results.append(row)
-    return results     
-#####################################################################################################
-def SeperateDataIntoOne_Zero():
-    zero=[]
-    one=[]
-    counterZero=0
-    counterOne=0
-    data=pd.read_csv('/home/deola/Documents/domor/cervical1.csv')
-    y=data.values[:,15]
-    for i in y:
-        if i==0:
-            zero.append(i)
-            counterZero+=1
-        else:
-            one.append(i)
-            counterOne+=1
-    #print one, zero       
-    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-    #print"Number of ones:%d\n Number of zeros:%d\n and Length:%d" %(counterOne, counterZero , len(y)) 
-    zero=[]
-    one=[]
-#####################################################################################################
+
 
 def PlotData():
-
-    import matplotlib.pyplot as plt
-    import pandas as pd
-    from pandas.tools.plotting import scatter_matrix    
-    import numpy as np
+    
     # The data set
-    data = pd.read_csv("C:/Users/Domor/Documents/cervical1.csv")
+    data = pd.read_csv('C:/Users/Domor/Documents/Python/cervical1.csv')
     #data.replace('?', 0, inplace=True)
     #data=data.astype('int')
     '''Histogram'''
@@ -164,12 +73,12 @@ def PlotData():
     '''Density Plot'''
     data.plot(kind='density', subplots=True, layout=(5,5), sharex=False)
     plt.show()
-    plt.savefig("/Users/Domor/Documents/density_cervical.eps", format="eps", dpi=1000)
+    plt.savefig("/Users/Domor/Documents/Python/density_cervical.eps", format="eps", dpi=300)
     
     '''The Box and wisker plot'''
     data.plot(kind='box', subplots=True, layout=(5,5), sharex=False, sharey=False)
     plt.show()
-    plt.savefig("/Users/Domor/Documents/box_cervical.eps", format="eps", dpi=1000)
+    plt.savefig("C:/User/Domor/Documents/Python/box_cervical.eps", format="eps", dpi=300)
     '''Co-relation plot'''
 
     names=['Age', 'Number_of_sexual_partners', 'First_ sexual_intercourse',
@@ -193,7 +102,7 @@ def PlotData():
     ax.set_yticklabels(names)
     #plt.show()
     #fig.tight_layout(pad=0, h_pad=0, w_pad=0)
-    plt.savefig("/Users/Domor/Documents/correlation_cervical.eps", format="eps", dpi=300)
+    plt.savefig("C:/Users/Domor/Documents/Python/correlation_cervical.eps", format="eps", dpi=300)
 
     '''Scattered plot'''
 
@@ -201,18 +110,9 @@ def PlotData():
     #plt.show()
 ########################################################################################################
 
-from pandas import read_csv
-from sklearn.feature_selection import RFE
-from sklearn.linear_model import LogisticRegression
-#from xgboost import XGBClassifier
-from sklearn.ensemble import ExtraTreesClassifier
-from pandas import read_csv
-from sklearn.ensemble import ExtraTreesClassifier
-    # load data
-seed=7    
     
 def ETC():    
-    dataframe = pd.read_csv('C:/Users/Domor/Documents/cervical1.csv')
+    dataframe = pd.read_csv('C:/Users/Domor/Documents/Python/cervical1.csv')
     array = dataframe.values
     X = array[:,0:15]
     Y = array[:,15]
@@ -223,7 +123,42 @@ def ETC():
     for i in model.feature_importances_:
         print (i*100)
 ######################################################################################################
+arr1=[[1, 0, 0],[1,0,1],[0,0,0]]
 
+def ensemble_pred(arr):
+    
+    countZero=0
+    countOne=0
+    result=list()
+    
+    for j in range(0, len(arr[0])):
+        for i in range(0, len(arr)):
+            if arr[i][j]==0:
+                countZero+=1
+            else:
+                countOne+=1
+        #print countZero, countOne
+        if countZero >=countOne:
+            result.append(0)
+        else:
+            result.append(1)
+        countZero=0
+        countOne=0        
+    
+    return result                  
+###################################################################################################
+
+actual=[1,1,1,1,1]
+predicted=[1,1,0,0,1]
+
+def accuracy_metric(real, pred):
+    '''Accuracy of a model'''
+    
+    result = 0
+    for i in range(len(real)):
+        if real[i] == pred[i]:
+            result += 1
+    print (str(result / float(len(real)) * 100.0)+'%')          
    
 ###############################################################################################
 def PlotCer():   
@@ -239,68 +174,110 @@ def PlotCer():
     x=[x for x in range(len (arr))]
     plt.xticks(x, names)
     plt.xticks(range(len(names)), names, rotation=90)
-    plt.bar(x, score)
+    #plt.bar(x, score)
     plt.grid()
-    plt.ylim((0.0,0.4))
+    #plt.ylim((0.0,0.4))
     plt.xlabel('Features')
     plt.ylabel('Ranking')
      
     plt.bar(x, arr)
     plt.grid()
-    plt.show()
+    #plt.show()
     plt.tight_layout(pad=0, h_pad=0, w_pad=0)
-    plt.savefig("C:Users/Domor/Documents/cervical1.eps", format="eps", dpi=300)
+    plt.savefig("C:/Users/Domor/Documents/Python/cervical1.eps", format="eps", dpi=300)
     
-#############################################################################################
 
-def Cer_Alg(dataset,num):   
+    
+##############################################################################################################
+def cerData(pathToCSV):
+    results=list()
+    with open(pathToCSV, 'r') as csvFile:
+            next(csvFile)
+            reader = csv.reader(csvFile, quoting=csv.QUOTE_NONNUMERIC) # change contents to floats
+            #next(reader, None)
+            for row in reader: # each row is a list
+                results.append(row)
+    return results     
+############################################################################################################
+
+
+def Cer_Alg(pathToCSV,num):   
     
     ''' The Algorithm for the cervical model'''
-    data = pd.read_csv(dataset)
+    data=cerData(pathToCSV)
+    #print(data[1])
     totalRes= list()
+    finalArr=list()
+    #print(len(data))
     
-    for n in range(0, num):
+    for n in range(0, num, 1):
         data=shuffle(data)
-        row, col= data.shape
-        print(row,col)
-        #data1=data.values[0:int(row)/2, 0:int(col)]
-        #data2=data.values[int(row)/2:int(row), 0:int(col)]
-        #print(data2)
-        #X=data.values[0:row/2,:col-1]
-        #y=data.values[0:row/2,col-1]
-        X=data.values[:,:col-1]
-        y=data.values[:,col-1]
-        #print X_test
-        model1 = DecisionTreeClassifier(criterion='gini', splitter='best',max_depth=5, random_state=30, )
-        model2 = DecisionTreeClassifier(criterion='entropy', splitter='best', max_depth=5, random_state=30)
+        print(len(data))
+        oddArr, evenArr=dataset_divider(data)        
+        oddArr=pd.DataFrame(oddArr)
+        evenArr=pd.DataFrame(evenArr)
+        row1, col1=oddArr.shape
+        row2, col2=evenArr.shape
+        #print(row,col)
         
-        clf=[model1, model2]
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=7)
+        X1=oddArr.values[:,:col1-1]
+        y1=oddArr.values[:,col1-1]
+        X2=evenArr.values[:,:col2-1]
+        y2=evenArr.values[:,col2-1]
+        #print X_test
+        model1 = DecisionTreeClassifier(criterion='gini', splitter='best',max_depth=1, random_state=30, )
+        model2 = DecisionTreeClassifier(criterion='entropy', splitter='best', max_depth=5, random_state=30)	
+        model3 = DecisionTreeClassifier(criterion='entropy', splitter='best', max_depth=5, random_state=30)
+        
+        clf=[model1, model2, model3]
+        X_train, X_test, y_train, y_test = train_test_split(X1, y1, test_size=0.01, random_state=7)
         res=list()
         for model in clf:
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
-            predictions = [round(value) for value in y_pred]
+            prediction = [round(value) for value in y_pred]
             # evaluate predictions
-            #accuracy = accuracy_score(y_test, predictions)
-            pre = precision_score(y_test, predictions)
-            #recall = recall_score(y_test, predictions)
-            print(confusion_matrix(y_test, predictions))
-            res.append(pre)
-            totalRes.append(pre)
-        print("\nAccuracy of CART: %.2f%%   Accuracy of C4.5: %.2f%%" % (res[0] * 100.0, res[1]*100))
-    print ("\nCombined accuracy: %.2f%%"%(sum(totalRes)*100.0/(len(totalRes))))
-    #print (totalRes)
+            finalArr.append(prediction)
+        return finalArr
+#            accuracy = accuracy_score(y_test, predictions)
+#            pre = precision_score(y_test, predictions)
+#            recall = recall_score(y_test, predictions)
+#            #print(confusion_matrix(y_test, predictions))
+#            res.append(accuracy)
+#            totalRes.append(accuracy)
+#        print("\nAccuracy of CART: %.2f%% Accuracy of C4.5: %.2f%%" % (res[0] * 100.0, res[1]*100))
+#    print ("\nCombined accuracy: %.2f%%"%(sum(totalRes)*100.0/(len(totalRes))))
+    #print totalRes
+#############################################################################################################
+def dataset_divider(arr):
+    arr=shuffle(arr)
+    size=len(arr)
+
+    evenArr=list()
+    oddArr=list()
+    for i in range(0, size):      
+        if i%2==0:
+            evenArr.append(arr[i])
+        else:
+            oddArr.append(arr[i])           
+    return oddArr, evenArr
+
+
+
 ##############################################################################################
 if __name__=="__main__":
     #m=ImportCerv()
     #print m
-    Cer_Alg('/Users/Domor/Documents/cervical1.csv',40)
+    arr3=Cer_Alg('C:/Users/Domor/Documents/Python/cervical1.csv',1)
+    print (arr3)
+    print(ensemble_pred(arr3))
     #modelled()
-    PlotData()
+    #PlotData()
     #RFE1()
     #ETC()
     #PlotCer()
-    #DT()
-    #print (cerData())
+    #DT2()
+    #print (cerData2())
+    #arr=[[0,1,2,3],[4,5,6,7], [8,9,10,11],[12,13,14,15],[16,17,18,19]]
+    #print(dataset_divider(arr)[0])
 
